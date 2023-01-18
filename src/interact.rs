@@ -19,7 +19,11 @@ impl Menu {
                     term.clear_line()?;
                     println!("you went up!");
                 }
-                Key::Enter => break,
+                Key::Enter => {
+                    term.clear_line()?;
+                    term.write_line(&usr_input)?;
+                    break;
+                }
                 _ => break,
             }
             term.clear_line()?;
