@@ -1,3 +1,4 @@
+pub mod interact;
 mod menu_struct;
 
 pub use menu_struct::{Menu, MenuItem};

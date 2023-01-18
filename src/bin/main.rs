@@ -1,10 +1,36 @@
+use cartographer::Menu;
+
 extern crate cartographer;
 
 fn main() {
-    println!("Hello, world!");
-    cartographer::scream_to_the_void();
+    let mut items: Vec<cartographer::MenuItem> = Vec::new();
 
-    cartographer::Menu::serve();
+    items.push(cartographer::MenuItem {
+        visible_name: "Item Number 1".to_string(),
+        visible_at_rest: true,
+        alternative_matches: Some(vec!["1".into(), "Number 1".into()]),
+        at_rest_position: Some(0),
+    });
+
+    items.push(cartographer::MenuItem {
+        visible_name: "Item Number 2".to_string(),
+        visible_at_rest: true,
+        alternative_matches: Some(vec!["2".into(), "Number 2".into()]),
+        at_rest_position: Some(1),
+    });
+
+    items.push(cartographer::MenuItem {
+        visible_name: "Item Number 3".to_string(),
+        visible_at_rest: true,
+        alternative_matches: Some(vec!["3".into(), "Number 3".into()]),
+        at_rest_position: Some(2),
+    });
+
+    let menu: Menu = Menu { items };
+
+    menu.serve().unwrap();
+
+    cartographer::scream_to_the_void();
 }
 
 // I wish to be able to say:
