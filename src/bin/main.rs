@@ -1,4 +1,4 @@
-use cartographer::Menu;
+use cartographer::{Menu, MenuOptions};
 
 extern crate cartographer;
 
@@ -26,7 +26,11 @@ fn main() {
         at_rest_position: Some(2),
     });
 
-    let menu: Menu = Menu { items };
+    let menu: Menu = Menu {
+        prompt: "Pick a number: ".to_string(),
+        items,
+        configuration: MenuOptions::default(),
+    };
 
     menu.serve().unwrap();
 
