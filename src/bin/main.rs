@@ -22,7 +22,14 @@ fn main() {
     items.push(cartographer::MenuItem {
         visible_name: "Item Number 3".to_string(),
         visible_at_rest: true,
-        alternative_matches: Some(vec!["3".into(), "Number 3".into()]),
+        alternative_matches: Some(vec!["3".into(), "Hello World!".into()]),
+        at_rest_position: Some(2),
+    });
+
+    items.push(cartographer::MenuItem {
+        visible_name: "The Hidden World".to_string(),
+        visible_at_rest: false,
+        alternative_matches: Some(vec!["42".into()]),
         at_rest_position: Some(2),
     });
 
