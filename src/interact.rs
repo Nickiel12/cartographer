@@ -42,9 +42,11 @@ impl MenuState {
                 num_results += 1;
             } else {
                 score += fuzzy_compare(&self.rows[i].menu_item.visible_name, &self.inputed);
-                for i in self.rows[i].menu_item.alternative_matches.clone().unwrap() {
-                    score += fuzzy_compare(&i, &self.inputed);
-                    score /= 2.0;
+                if self.rows[i].menu_item.alternative_matches.is_some() {
+                    for i in self.rows[i].menu_item.alternative_matches.clone().unwrap() {
+                        score += fuzzy_compare(&i, &self.inputed);
+                        score /= 2.0;
+                    }
                 }
                 if score > opts.min_search_threshold {
                     num_results += 1;
@@ -131,6 +133,7 @@ impl MenuState {
         next_screen += self.inputed.as_str();
         next_screen_num_lines += 1;
 
+        self.term.clear_line()?;
         // Clear last menu draw, but ignore this section if it is the first draw
         if self.lines_written != 0 {
             self.term.clear_last_lines(self.lines_written - 1)?;
@@ -147,6 +150,7 @@ impl MenuState {
 
 impl Menu {
     pub fn serve(self: &Self) -> Result<usize, std::io::Error> {
+        println!("TODO: build derive for enums to and from strings, and a trait");
         let term = Term::stdout();
 
         let mut state = MenuState {
@@ -211,8 +215,6 @@ impl Menu {
                     state.lines_written += 1;
                 }
             }
-            // fixes strange ghost lines
-            state.term.clear_line()?;
         }
 
         println!("\nHere are the items you selected:");

@@ -14,6 +14,9 @@ pub mod interact;
 mod menu_struct;
 pub use menu_struct::{Menu, MenuItem, MenuOptions};
 
+/// Contains the menu! and menu_item! macros
+mod menu_macros;
+
 pub fn scream_to_the_void() {
     println!("AHAAAAAAAAAAAAAAA");
 }
