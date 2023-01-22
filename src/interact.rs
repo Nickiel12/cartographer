@@ -1,4 +1,5 @@
 use rust_fuzzy_search::fuzzy_compare;
+use core::num;
 use std::io::Write;
 use std::time::Duration;
 
@@ -62,7 +63,10 @@ impl MenuState {
                 if self.rows[i].menu_item.visible_at_rest {
                     self.rows[i].is_visible = true;
                 }
+                self.cursor_row = 0;
             }
+        } else {
+            self.cursor_row = (self.cursor_row / (self.lines_written - 3)) * num_results;
         }
     }
 
@@ -133,9 +137,9 @@ impl MenuState {
         next_screen += self.inputed.as_str();
         next_screen_num_lines += 1;
 
-        self.term.clear_line()?;
         // Clear last menu draw, but ignore this section if it is the first draw
         if self.lines_written != 0 {
+            self.term.clear_line()?;
             self.term.clear_last_lines(self.lines_written - 1)?;
             self.lines_written = 0;
         }
@@ -149,8 +153,7 @@ impl MenuState {
 }
 
 impl Menu {
-    pub fn serve(self: &Self) -> Result<usize, std::io::Error> {
-        println!("TODO: build derive for enums to and from strings, and a trait");
+    pub fn serve(self: &Self) -> Result<Option<Vec::<String>>, std::io::Error> {
         let term = Term::stdout();
 
         let mut state = MenuState {
@@ -195,18 +198,24 @@ impl Menu {
                     state.inputed.pop();
                     state.search_from_inputed(&self.configuration);
                 }
-                Key::ArrowUp => {
+                Key::ArrowUp | Key::ArrowLeft => {
                     if state.cursor_row != 0 {
                         state.cursor_row -= 1;
                     }
                 }
-                Key::ArrowDown => {
+                Key::Tab => {
+                    if state.cursor_row <= state.lines_written - 3 {
+                        state.cursor_row += 1;
+                    } else {
+                        state.cursor_row = 0;
+                    }
+                }
+                Key::ArrowDown | Key::ArrowRight => {
                     if state.cursor_row <= state.lines_written - 3 {
                         state.cursor_row += 1;
                     }
                 }
                 Key::Enter => {
-                    println!("Ok, I leave now");
                     break;
                 }
                 _ => {
@@ -217,17 +226,17 @@ impl Menu {
             }
         }
 
-        println!("\nHere are the items you selected:");
-        let mut output: Vec<MenuItem> = vec![];
+        let mut output: Vec<String> = Vec::new();
         for i in state.rows {
             if i.is_selected {
-                println!("{}", i.menu_item.visible_name);
-                output.push(i.menu_item);
+                output.push(i.menu_item.visible_name);
             }
         }
 
-        println!("\n {}", state.inputed);
-
-        Ok(1)
+        if output.len() == 0 {
+            Ok(None)
+        } else {
+            Ok(Some(output))
+        }
     }
 }
