@@ -1,3 +1,20 @@
+/// Creates a ['MenuItem'], filling in the defaults if values are not provided
+/// 
+/// 
+///
+/// ## Use
+/// ```
+/// menu_item!("A Menu Item", true, 2, ["alt search"])
+///
+/// // Is equal to
+///
+/// MenuItem {
+///     visible_name: "A Menu Item".to_string(),
+///     visible_at_rest: true,
+///     at_rest_position: Some(2),
+///     alternative_matches: Some(vec!["alt search"]),
+///     }
+/// ```
 #[macro_export]
 macro_rules! menu_item {
     ($name:expr) => {
@@ -52,6 +69,26 @@ macro_rules! menu_item {
     };
 }
 
+/// Creates a ['Menu'] in one line
+/// 
+/// For the best experience, pair it with the ['menu_item'] macro for simple menu declaration.
+/// 
+/// You can also configure the menu by passing a ['MenuOptions']. If this is not provided,
+/// the defaults are used instead
+/// 
+/// ## Example
+/// ```
+/// let menu = menu![
+///       "Pick a number: ",
+///       [
+///           menu_item!("Item Number 1", true, 1),
+///           menu_item!("Item Number 2", true, 1),
+///       ]
+/// ]
+/// 
+/// let usr_choice = menu.serve().unwrap();
+/// println!("{}", usr_choice);
+/// ```
 #[macro_export]
 macro_rules! menu {
     ( $prompt:expr, [$( $menu_item:expr ),*]) => {
