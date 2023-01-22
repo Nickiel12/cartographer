@@ -1,6 +1,6 @@
-/// Creates a ['MenuItem'], filling in the defaults if values are not provided
-/// 
-/// 
+/// Creates a [`crate::MenuItem`], filling in the defaults if values are not provided
+///
+///
 ///
 /// ## Use
 /// ```
@@ -69,13 +69,13 @@ macro_rules! menu_item {
     };
 }
 
-/// Creates a ['Menu'] in one line
-/// 
-/// For the best experience, pair it with the ['menu_item'] macro for simple menu declaration.
-/// 
-/// You can also configure the menu by passing a ['MenuOptions']. If this is not provided,
+/// Creates a [`crate::Menu`] in one line
+///
+/// For the best experience, pair it with the [`crate::menu_item`] macro for simple menu declaration.
+///
+/// You can also configure the menu by passing a [`crate::MenuOptions`]. If this is not provided,
 /// the defaults are used instead
-/// 
+///
 /// ## Example
 /// ```
 /// let menu = menu![
@@ -85,7 +85,7 @@ macro_rules! menu_item {
 ///           menu_item!("Item Number 2", true, 1),
 ///       ]
 /// ]
-/// 
+///
 /// let usr_choice = menu.serve().unwrap();
 /// println!("{}", usr_choice);
 /// ```

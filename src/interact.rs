@@ -1,5 +1,4 @@
 use rust_fuzzy_search::fuzzy_compare;
-use core::num;
 use std::io::Write;
 use std::time::Duration;
 
@@ -153,7 +152,7 @@ impl MenuState {
 }
 
 impl Menu {
-    pub fn serve(self: &Self) -> Result<Option<Vec::<String>>, std::io::Error> {
+    pub fn serve(self: &Self) -> Result<Option<Vec<String>>, std::io::Error> {
         let term = Term::stdout();
 
         let mut state = MenuState {
