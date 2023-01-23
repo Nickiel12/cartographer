@@ -8,3 +8,8 @@ edition = "2021"
 [dependencies]
 console = "0.15.5"
 rust-fuzzy-search = "0.1.1"
+serde = { version = "1.0.152", features = ["derive"], optional = true }
+
+[features]
+serde_serialize = ["dep:serde"]
+
