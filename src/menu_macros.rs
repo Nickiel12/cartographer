@@ -98,11 +98,11 @@ macro_rules! menu {
             $(
                 items.push($menu_item);
             )*
-            Menu {
-                prompt: $prompt.to_string(),
-                configuration: MenuOptions::default(),
-                items
-            }
+            Menu::new(
+                $prompt.to_string(),
+                items,
+                MenuOptions::default()
+            )
         }
 
     };
@@ -115,8 +115,8 @@ macro_rules! menu {
             )*
             Menu {
                 prompt: $prompt.to_string(),
-                configuration: $configuration,
-                items
+                items,
+                configuration: $configuration
             }
         }
 

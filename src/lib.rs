@@ -22,12 +22,9 @@
 //! ```
 //!
 
-/// The module with the actual Menu Logic
-mod interact;
-
 /// Contains the Menu and Menu Item structs for configuration
-mod menu_struct;
-pub use menu_struct::{Menu, MenuItem, MenuOptions};
+mod menu;
+pub use menu::{Menu, MenuItem, MenuOptions};
 
 /// Contains the menu! and menu_item! macros
 mod menu_macros;
