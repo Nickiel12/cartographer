@@ -18,7 +18,7 @@
 //!
 //!
 //! // Returns the string of the item given
-//! let usr_selection = menu.serve().unwrap();
+//! let usr_selection = menu.serve()?;
 //! ```
 //!
 

@@ -86,7 +86,7 @@ macro_rules! menu_item {
 ///       ]
 /// ]
 ///
-/// let usr_choice = menu.serve().unwrap();
+/// let usr_choice = menu.serve()?;
 /// println!("{}", usr_choice);
 /// ```
 #[macro_export]
