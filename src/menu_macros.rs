@@ -1,8 +1,6 @@
 /// Creates a [`MenuItem`](crate::MenuItem), filling in the defaults if values are not provided
 ///
-///
-///
-/// ## Use
+/// ## Example
 /// ```
 /// menu_item!("A Menu Item", true, 2, ["alt search"])
 ///
