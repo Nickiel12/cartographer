@@ -152,6 +152,8 @@ impl MenuState {
 }
 
 impl Menu {
+    /// Serve a menu. This function is locking and requires a terminal.
+    /// It returns a Vec of Strings from the items the user selected
     pub fn serve(self: &Self) -> Result<Option<Vec<String>>, std::io::Error> {
         let term = Term::stdout();
 

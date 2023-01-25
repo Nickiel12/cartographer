@@ -1,4 +1,4 @@
-/// Creates a [`crate::MenuItem`], filling in the defaults if values are not provided
+/// Creates a [`MenuItem`](crate::MenuItem), filling in the defaults if values are not provided
 ///
 ///
 ///
@@ -54,11 +54,11 @@ macro_rules! menu_item {
     };
 }
 
-/// Creates a [`crate::Menu`] in one line
+/// Creates a [`Menu`](crate::Menu) in one line
 ///
-/// For the best experience, pair it with the [`crate::menu_item`] macro for simple menu declaration.
+/// For the best experience, pair it with the [`menu_item!`](crate::menu_item!) macro for simple menu declaration.
 ///
-/// You can also configure the menu by passing a [`crate::MenuOptions`]. If this is not provided,
+/// You can also configure the menu by passing a [`MenuOptions`](crate::MenuOptions). If this is not provided,
 /// the defaults are used instead
 ///
 /// ## Example
@@ -86,7 +86,7 @@ macro_rules! menu {
             Menu::new(
                 $prompt.to_string(),
                 items,
-                MenuOptions::default()
+                Some(MenuOptions::default())
             )
         }
 
@@ -98,11 +98,11 @@ macro_rules! menu {
             $(
                 items.push($menu_item);
             )*
-            Menu {
-                prompt: $prompt.to_string(),
+            Menu::new(
+                $prompt.to_string(),
                 items,
-                configuration: $configuration
-            }
+                Some($configuration)
+            )
         }
 
     };

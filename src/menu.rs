@@ -1,5 +1,3 @@
-use console::Key;
-
 mod interact;
 
 #[cfg_attr(
@@ -9,7 +7,7 @@ mod interact;
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 /// A data structure representing a line-item in a menu
 ///
-/// The recommended way of constructing these is to use  the [`crate::menu_item!`] macro
+/// The recommended way of constructing these is to use  the [`menu_item!`](crate::menu_item!) macro
 /// though the output will be the same
 ///
 /// ## Example
@@ -101,11 +99,26 @@ pub struct Menu {
 }
 
 impl Menu {
-    pub fn new(prompt: String, menu_items: Vec<MenuItem>, configuration: MenuOptions) -> Menu {
+    /// Create a new Menu from a prompt, list of [`MenuItem`](crate::MenuItem)s, and an optional
+    /// [`MenuOptions`](crate::MenuOptions) instance. If configuration is `None`, then the default
+    /// is used
+    pub fn new(
+        prompt: String,
+        menu_items: Vec<MenuItem>,
+        configuration: Option<MenuOptions>,
+    ) -> Menu {
         Menu {
             prompt,
             items: menu_items,
-            configuration,
+            configuration: {
+                if configuration.is_some() {
+                    configuration.unwrap()
+                } else {
+                    MenuOptions {
+                        ..MenuOptions::default()
+                    }
+                }
+            },
         }
     }
 }

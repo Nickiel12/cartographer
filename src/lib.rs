@@ -1,7 +1,7 @@
 //! A menu builder for Terminal User Interfaces with searching and arrow
 //! key navigation
 //!
-//! Use the [`crate::menu_item!`] and [`crate::menu!`] macros for the best effect
+//! Use the [`menu_item!`](crate::menu_item!) and [`menu!`](crate::menu!) macros for the best effect
 //!
 //! ## Example
 //! ```
