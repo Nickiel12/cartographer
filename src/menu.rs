@@ -9,34 +9,80 @@ mod interact;
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 /// A data structure representing a line-item in a menu
 ///
-/// The recommended way of constructing these is to use  the [`menu_item!`] macro
+/// The recommended way of constructing these is to use  the [`crate::menu_item!`] macro
 /// though the output will be the same
 ///
 /// ## Example
 /// ```
-/// let menu_item = MenuItem {
-///     visible_name: "A Menu Item".to_string(),
-///     visible_at_rest: true,
-///     at_rest_position: Some(1),
-///     alternative_matches: None,
-///     }
+/// let menu_item = MenuItem::new("A Menu Item".to_string())
+///     .visible_at_rest(true)
+///     .at_rest_position(1);
 ///
+/// // is the same as
 ///
+/// menu_item!("A Menu Item", true, 1);
 /// ```
 pub struct MenuItem {
     /// The String that will display for this item in the menu
-    pub visible_name: String,
+    visible_name: String,
 
     /// Toggles if this item will be shown when no search terms are available
-    pub visible_at_rest: bool,
+    visible_at_rest: bool,
 
     /// Optional feature that will let you specify in what order the MenuItems will be
     /// displayed
-    pub at_rest_position: Option<usize>,
+    at_rest_position: Option<usize>,
 
-    /// A list of strings that will also be used, in addition to the [`visible_name`],
+    /// A list of strings that will also be used, in addition to the `visible_name`,
     /// when processing the search results
-    pub alternative_matches: Option<Vec<String>>,
+    alternative_matches: Option<Vec<String>>,
+}
+
+impl MenuItem {
+    /// Create a new MenuItem with the visible name specified
+    pub fn new(visible_name: String) -> Self {
+        MenuItem {
+            visible_name,
+            visible_at_rest: true,
+            at_rest_position: None,
+            alternative_matches: None,
+        }
+    }
+
+    /// Set whether a [`MenuItem`] is visible when no search is showing
+    pub fn visible_at_rest(self: Self, visible: bool) -> Self {
+        MenuItem {
+            visible_at_rest: visible,
+            ..self
+        }
+    }
+
+    /// Set a [`MenuItem`]'s resting position in the no search menu
+    /// Note: Won't have any effect if visible_at_rest is false
+    pub fn at_rest_position(self: Self, position: usize) -> Self {
+        MenuItem {
+            at_rest_position: Some(position),
+            ..self
+        }
+    }
+
+    /// Set alternative matches for a [`MenuItem`]. These are strings that this item will
+    /// match to when searching - in addition to the visible_name
+    pub fn add_alternative_match(self: Self, new_matches: Vec<String>) -> Self {
+        let mut cur_matches: Vec<String>;
+        if self.alternative_matches.is_none() {
+            cur_matches = Vec::new();
+        } else {
+            cur_matches = self.alternative_matches.unwrap();
+        }
+        for i in new_matches {
+            cur_matches.push(i);
+        }
+        MenuItem {
+            alternative_matches: Some(cur_matches),
+            ..self
+        }
+    }
 }
 
 /// The Menu struct that contains the information and
@@ -132,7 +178,7 @@ impl MenuOptions {
         }
     }
     /// Set the key that is used to select an item.
-    /// The default is: [`console::Key::Space`]
+    /// The default is: [`console::Key::Char(' ')`]
     pub fn select_key(self: Self, key: console::Key) -> Self {
         MenuOptions {
             select_key: key,

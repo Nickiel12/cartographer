@@ -20,51 +20,36 @@ macro_rules! menu_item {
     ($name:expr) => {
         {
             use cartographer::MenuItem;
-            MenuItem {
-                visible_name: $name.to_string(),
-                visible_at_rest: true,
-                at_rest_position: None,
-                alternative_matches: None,
-            }
+            MenuItem::new($name.to_string())
         }
     };
     ($name:expr, $visible_at_rest:expr) => {
         {
             use cartographer::MenuItem;
-            MenuItem {
-                visible_name: $name.to_string(),
-                visible_at_rest: $visible_at_rest,
-                at_rest_position: None,
-                alternative_matches: None,
-            }
+            MenuItem::new($name.to_string()).visible_at_rest($visible_at_rest)
         }
     };
     ($name:expr, $visible_at_rest:expr, $default_position:expr) => {
         {
             use cartographer::MenuItem;
-            MenuItem {
-                visible_name: $name.to_string(),
-                visible_at_rest: $visible_at_rest,
-                at_rest_position: Some($default_position),
-                alternative_matches: None,
-            }
+            MenuItem::new($name.to_string())
+                .visible_at_rest($visible_at_rest)
+                .at_rest_position($default_position)
         }
     };
     ($name:expr, $visible_at_rest:expr, $default_position:expr, [$($alt_matches:expr),+]) => {
         {
             use cartographer::MenuItem;
-            MenuItem {
-                visible_name: $name.to_string(),
-                visible_at_rest: $visible_at_rest,
-                at_rest_position: Some($default_position),
-                alternative_matches: Some({
+            MenuItem::new($name.to_string())
+                .visible_at_rest($visible_at_rest)
+                .at_rest_position($default_position)
+                .add_alternative_match({
                     let mut matches = Vec::<String>::new();
                     $(
                         matches.push($alt_matches.to_string());
                     )+
                     matches
-                }),
-            }
+                })
         }
     };
 }
