@@ -17,26 +17,37 @@ struct MenuItemKeepTrack {
 /// Keeps track of the state of the menu
 struct MenuState {
     // Stored user input
-    pub prompt: String,
-    pub inputed: String,
-    pub cursor_row: usize,
+    prompt: String,
+    inputed: String,
+    cursor_row: usize,
 
     // Live updated info on data rows
-    pub rows: Vec<MenuItemKeepTrack>,
+    rows: Vec<MenuItemKeepTrack>,
 
     // stored data that is only read
-    pub term: Term,
+    term: Term,
 
     // data about the displayed menu
-    pub lines_written: usize,
+    lines_written: usize,
 }
 
 impl MenuState {
-    pub fn search_from_inputed(self: &mut Self, opts: &MenuOptions) {
+    /// goes through the [`MenuState`], comparing each [`MenuItem`](crate::MenuItem) comparing the
+    /// visible_name and alternative_matches to the user's input
+    fn search_from_inputed(self: &mut Self, opts: &MenuOptions) {
+        // keep a count of how many rows for later use
         let mut num_results = 0;
+
+        // For each row, fuzzy compare, average out the fuzzy score, and if it is greater than the
+        // [`MenuOptions'](crate::MenuOptions) configured min_search_threshold. If it is greater,
+        // set its visibility to true. (The visibility of the row is what decides if something is
+        // shown
         for i in 0..self.rows.len() {
+            // The score of this row
             let mut score = 0.0;
 
+            // If the row is already selected, and it is configured to display selected items in
+            // search results, then mark all the selected rows as visible
             if self.rows[i].is_selected && opts.show_select_in_search {
                 self.rows[i].is_visible = true;
                 num_results += 1;
@@ -57,20 +68,29 @@ impl MenuState {
             }
         }
 
+        // If there are no search results, default to showing the original menu
         if num_results == 0 {
             for i in 0..self.rows.len() {
                 if self.rows[i].menu_item.visible_at_rest {
                     self.rows[i].is_visible = true;
                 }
+                // Assume that the there were no items shown at some point, and the cursor has been
+                // "smooshed to the ceiling"
                 self.cursor_row = 0;
             }
         } else {
+            // Have the cursor stay in the same percentage zone of the menu (25% down before the
+            // search, keep it 25% from the top, after the search)
             self.cursor_row = (self.cursor_row / (self.lines_written - 3)) * num_results;
         }
     }
 
-    /// Edit the current row's indicator to be visible
+    /// Edit the current row's indicator to be visible on user input
     fn mark_selected(self: &mut Self) {
+        // Poor man's "filter by visible" for loop
+        // counter keeps track of current "visible" row, and if that is the line that the user's
+        // cursor is on, sets it to selected, because that is the only row that the user could be
+        // trying to select
         let mut counter = 0;
         for i in 0..self.rows.len() {
             if self.rows[i].is_visible {
@@ -82,47 +102,52 @@ impl MenuState {
         }
     }
 
-    /// Get the string for visible row at item index `item_index`
+    /// Get the visible string for visible row at item index `item_index`
     fn get_row(
         self: &Self,
         item: &MenuItemKeepTrack,
         cur_redraw_row: usize,
         opts: &MenuOptions,
     ) -> String {
+        // If the row we are making a string for, and if the user's cursor is set to that row, set
+        // the cursor character, else it is a space
         let cursor = if self.cursor_row == cur_redraw_row {
             opts.cursor.to_string()
         } else {
             " ".to_string()
         };
 
+        // If the line is selected, add the selected character to the string.
         let sel_indicator = match item.is_selected {
             true => opts.selected_indicator.to_string() + " ",
             false => "  ".to_string(),
         };
 
-        return cursor + sel_indicator.as_str() + item.menu_item.visible_name.as_str() + "\n";
+        return cursor + sel_indicator.as_str() + item.menu_item.visible_name.as_str();
     }
 
     /// Redraw the menu based on the info in MenuState
-    pub fn redraw(self: &mut Self, opts: &MenuOptions) -> Result<(), std::io::Error> {
-        // count the number of lines the next draw will write
+    fn redraw(self: &mut Self, opts: &MenuOptions) -> Result<(), std::io::Error> {
+        // Keep the number of lines the next draw will write
         let mut next_screen_num_lines = 0;
+
+        // Make a multiline string that represents the next screen
         let mut next_screen = {
             let mut output = String::new();
 
             // for every item we are keeping track of,
-            // if it is "visible", get_row for it and add it to the next draw
+            // if it is "visible", get_row the visible string for it and add it to the next draw
             for i in 0..self.rows.len() {
                 let item = self.rows.get(i).unwrap();
 
-                // If the menu + prompt-and-user-input is greater than the
-                // maxumum configured lines, exit early
+                // If adding another line would make it taller than the configured max screen,
+                // break early
                 if next_screen_num_lines + 1 > opts.max_lines_visible {
                     break;
                 }
 
                 if item.is_visible {
-                    let x = self.get_row(item, next_screen_num_lines, &opts);
+                    let x = self.get_row(item, next_screen_num_lines, &opts) + "\n";
                     output += x.as_str();
 
                     next_screen_num_lines += 1;
@@ -131,13 +156,15 @@ impl MenuState {
             output
         };
 
-        // Add the prompt and the user's input to the redraw
+        // Add the prompt and the user's input to the redraw String
         next_screen += self.prompt.as_str();
         next_screen += self.inputed.as_str();
         next_screen_num_lines += 1;
 
         // Clear last menu draw, but ignore this section if it is the first draw
         if self.lines_written != 0 {
+            // This line fixes some strange bugs that included prompt lines not being deleted
+            // it does cause some flickering in generated video files however
             self.term.clear_line()?;
             self.term.clear_last_lines(self.lines_written - 1)?;
             self.lines_written = 0;
@@ -220,9 +247,11 @@ impl Menu {
                     break;
                 }
                 _ => {
-                    println!("Heya fella, that key hasn't been implemented yet");
-                    std::thread::sleep(Duration::from_millis(2000));
-                    state.lines_written += 1;
+                    // Ignore any other keypresses
+                    //println!("Heya fella, that key hasn't been implemented yet");
+                    //std::thread::sleep(Duration::from_millis(2000));
+                    //state.lines_written += 1;
+                    continue;
                 }
             }
         }
