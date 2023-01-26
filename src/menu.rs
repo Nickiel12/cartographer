@@ -1,3 +1,4 @@
+use console;
 mod interact;
 
 #[cfg_attr(
@@ -150,7 +151,7 @@ pub struct MenuOptions {
     selected_indicator: char,
 
     /// The button the user uses to select an item
-    select_key: Key,
+    select_key: console::Key,
 
     /// The maximum number of vertical lines the menu can have
     max_lines_visible: usize,
@@ -244,7 +245,7 @@ impl Default for MenuOptions {
         MenuOptions {
             cursor: '>',
             selected_indicator: 'X',
-            select_key: Key::Char(' '),
+            select_key: console::Key::Char(' '),
             max_lines_visible: 10,
             min_search_threshold: 0.005,
             show_select_in_search: true,

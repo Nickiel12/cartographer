@@ -61,13 +61,15 @@ macro_rules! menu_item {
 ///
 /// ## Example
 /// ```
-/// let menu = menu![
+/// let configuration = MenuOptions::new();
+/// let menu = menu!(
 ///       "Pick a number: ",
+///       configuration,
 ///       [
 ///           menu_item!("Item Number 1", true, 1),
 ///           menu_item!("Item Number 2", true, 1),
 ///       ]
-/// ]
+/// )
 ///
 /// let usr_choice = menu.serve()?;
 /// println!("{}", usr_choice);
@@ -92,7 +94,7 @@ macro_rules! menu {
     ( $prompt:expr, $configuration:expr, [$( $menu_item:expr ),*]) => {
         {
             use cartographer::{MenuItem, Menu};
-            let items = Vec::<MenuItem>::new();
+            let mut items = Vec::<MenuItem>::new();
             $(
                 items.push($menu_item);
             )*

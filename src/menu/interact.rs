@@ -1,12 +1,10 @@
-use rust_fuzzy_search::fuzzy_compare;
-use std::io::Write;
-use std::time::Duration;
-
 use crate::Menu;
 use crate::MenuItem;
 use crate::MenuOptions;
 use console::Key;
 use console::Term;
+use rust_fuzzy_search::fuzzy_compare;
+use std::io::Write;
 
 struct MenuItemKeepTrack {
     menu_item: MenuItem,
@@ -52,10 +50,13 @@ impl MenuState {
                 self.rows[i].is_visible = true;
                 num_results += 1;
             } else {
-                score += fuzzy_compare(&self.rows[i].menu_item.visible_name, &self.inputed);
+                score += fuzzy_compare(
+                    &self.rows[i].menu_item.visible_name.to_lowercase(),
+                    &self.inputed.to_lowercase(),
+                );
                 if self.rows[i].menu_item.alternative_matches.is_some() {
                     for i in self.rows[i].menu_item.alternative_matches.clone().unwrap() {
-                        score += fuzzy_compare(&i, &self.inputed);
+                        score += fuzzy_compare(&i.to_lowercase(), &self.inputed.to_lowercase());
                         score /= 2.0;
                     }
                 }
@@ -81,7 +82,15 @@ impl MenuState {
         } else {
             // Have the cursor stay in the same percentage zone of the menu (25% down before the
             // search, keep it 25% from the top, after the search)
-            self.cursor_row = (self.cursor_row / (self.lines_written - 3)) * num_results;
+            if ((self.lines_written as isize) - 3) > 0 {
+                if num_results == 1 {
+                    self.cursor_row = 0;
+                } else {
+                    self.cursor_row = (self.cursor_row / (self.lines_written - 3)) * num_results;
+                }
+            } else {
+                self.cursor_row = 0;
+            }
         }
     }
 
@@ -232,14 +241,14 @@ impl Menu {
                     }
                 }
                 Key::Tab => {
-                    if state.cursor_row <= state.lines_written - 3 {
+                    if (state.cursor_row as i32) <= (state.lines_written as i32) - 3 {
                         state.cursor_row += 1;
                     } else {
                         state.cursor_row = 0;
                     }
                 }
                 Key::ArrowDown | Key::ArrowRight => {
-                    if state.cursor_row <= state.lines_written - 3 {
+                    if (state.cursor_row as i32) <= (state.lines_written as i32) - 3 {
                         state.cursor_row += 1;
                     }
                 }
