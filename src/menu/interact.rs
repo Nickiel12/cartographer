@@ -82,14 +82,10 @@ impl MenuState {
         } else {
             // Have the cursor stay in the same percentage zone of the menu (25% down before the
             // search, keep it 25% from the top, after the search)
-            if ((self.lines_written as isize) - 3) > 0 {
-                if num_results == 1 {
-                    self.cursor_row = 0;
-                } else {
-                    self.cursor_row = (self.cursor_row / (self.lines_written - 3)) * num_results;
-                }
-            } else {
+            if (self.lines_written as i32 - 3) <= 0 {
                 self.cursor_row = 0;
+            } else {
+                self.cursor_row = (self.cursor_row / (self.lines_written - 3)) * num_results;
             }
         }
     }
@@ -135,13 +131,12 @@ impl MenuState {
         return cursor + sel_indicator.as_str() + item.menu_item.visible_name.as_str();
     }
 
-    /// Redraw the menu based on the info in MenuState
-    fn redraw(self: &mut Self, opts: &MenuOptions) -> Result<(), std::io::Error> {
+    fn get_menu_string(self: &mut Self, opts: &MenuOptions) -> Result<String, std::io::Error> {
         // Keep the number of lines the next draw will write
         let mut next_screen_num_lines = 0;
 
         // Make a multiline string that represents the next screen
-        let mut next_screen = {
+        let next_screen = {
             let mut output = String::new();
 
             // for every item we are keeping track of,
@@ -164,11 +159,29 @@ impl MenuState {
             }
             output
         };
+        Ok(next_screen)
+    }
 
-        // Add the prompt and the user's input to the redraw String
-        next_screen += self.prompt.as_str();
-        next_screen += self.inputed.as_str();
-        next_screen_num_lines += 1;
+    /// Redraw the menu based on the info in MenuState
+    fn redraw(self: &mut Self, opts: &MenuOptions) -> Result<(), std::io::Error> {
+        let mut next_screen: String;
+        let mut next_screen_num_lines: usize;
+
+        loop {
+            next_screen = self.get_menu_string(opts)?;
+
+            next_screen_num_lines = next_screen.matches('\n').count();
+            if (next_screen_num_lines as i32 - 1) < self.cursor_row as i32 {
+                self.cursor_row -= 1;
+                continue;
+            } else {
+                // Add the prompt and the user's input to the redraw String
+                next_screen += self.prompt.as_str();
+                next_screen += self.inputed.as_str();
+                next_screen_num_lines = next_screen.matches('\n').count() + 1;
+                break;
+            }
+        }
 
         // Clear last menu draw, but ignore this section if it is the first draw
         if self.lines_written != 0 {
