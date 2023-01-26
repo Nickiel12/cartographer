@@ -19,3 +19,7 @@ serde = { version = "1.0.152", features = ["derive"], optional = true }
 [features]
 serde_serialize = ["dep:serde"]
 
+[dev-dependencies]
+serde = { version = "1.0.152", features = ["derive"]}
+enum-variants-strings = "0.2.1"
+

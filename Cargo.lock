@@ -7,6 +7,7 @@ name = "cartographer"
 version = "0.1.0"
 dependencies = [
  "console",
+ "enum-variants-strings",
  "rust-fuzzy-search",
  "serde",
 ]
@@ -25,10 +26,37 @@ dependencies = [
 ]
 
 [[package]]
+name = "either_n"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4c91ae510829160d5cfb19eb4ae7b6e01d44b767ca8f727c6cee936e53cc9ae5"
+
+[[package]]
 name = "encode_unicode"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a357d28ed41a50f9c765dbfe56cbc04a64e53e5fc58ba79fbc34c10ef3df831f"
+
+[[package]]
+name = "enum-variants-strings"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e7f7c8f6d8e447f53b18f59be2c5ac17a5f04f5ffc7c29163c40faf44225b201"
+dependencies = [
+ "enum-variants-strings-derive",
+]
+
+[[package]]
+name = "enum-variants-strings-derive"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8b0846fd54a75cab5c219037cd7f2353e2d5d6cd76429097632232ba2b1e7e2c"
+dependencies = [
+ "either_n",
+ "proc-macro2",
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "lazy_static"
