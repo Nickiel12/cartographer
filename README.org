@@ -1,0 +1,81 @@
+#+title: Readme
+
+* [Placeholder till image]
+** TODO make a cartographer image
+* Cartographer
+Cartographer is a small library using [Console](https://crates.io/crates/console) and macros to bring "just add water" TUI menus to your programs.
+Utilizing the power of macros, you can get an interactive menu for users to interact with.
+
+The main reason I created this crate, was that other, less specific crates, like [Dialoguer](https://docs.rs/dialoguer/latest/dialoguer/) don't have support for hiding options unless they are searched for. [See examples, for an example of this](https://github.com/Nickiel12/cartographer/tree/main/examples)
+
+- [ ] Make an examples README with gifs of the examples being run
+
+All types handled by this crate are of type ~String~. The values from prompts, and the return types are all strings, so I would suggest using a solution much like what can be found in [the examples](https://github.com/Nickiel12/cartographer/blob/main/examples/enum_matching_results.rs) to make it easy to ~match~ to the return value.
+But all returned strings will match the given prompts (including special formatting!), so just look for that if you decide to match by strings!
+
+** TODO fix macro probably failing if given a ~String~
+
+** Example
+(You can find more examples [in the examples directory](https://github.com/Nickiel12/cartographer/tree/main/examples))
+
+A basic example of a multi select menu:
+#+begin_src rust
+
+// ./examples/example_menu.rs
+use cartographer::{menu, menu_item, MenuOptions};
+
+fn main() {
+    let options = MenuOptions::new().cursor('➤').selected_indicator('✓');
+
+    let menu = menu!(
+        "So you should try it!: ",
+        options,
+        [
+            menu_item!("Using Cartographer", true, 1),
+            menu_item!("Making TUI menus", true, 2),
+            menu_item!("Is easy", true, 3),
+            menu_item!("Read on for more!", false, 0, ["Ok"])
+        ]
+    );
+
+    let usr_selection = menu.serve().unwrap().unwrap();
+    println!("\nYou Selected:\n{:?}", usr_selection);
+}
+
+#+end_src
+
+[[./demo.gif]]
+
+** How to Use
+*** Adding it to your project dependencies
+Simply run
+#+begin_ sh
+cargo add cartographer
+#+end_sh
+in your project directory, or add
+#+begin_toml options
+"cartographer" = "the latest version"
+#+end_toml
+to your ~Cargo.toml~.
+
+*** Creating a menu!
+There are two ways you can create a menu and serve it. The macro way, and the manual way. The macro way is demonstrated in the example above.
+
+The manual way uses builder notation on the ~cartographer::Menu~ and ~cartographer::MenuItem~ structs to manually build menus and menu items. The macro way is recommended, but you can find examples of the manual way in [in the examples directory](https://github.com/Nickiel12/cartographer/blob/main/examples/manual_menu.rs)
+
+*** Serving your menu
+All menu logic is handled behind the scenes, and all you have to do is call ~.serve()~ on a valid ~Menu~ and wait for the user to make their selections.
+
+While threading with this library is probably possible (though untested), make sure that there is no terminal output sent by other threads, or visual problems will start to crop up.
+
+
+*** Configuration
+To configure how your menu looks, you can use the ~cartographer::MenuOptions~ struct and builder notation to create a configuration.
+
+#+begin_rust
+    let options = MenuOptions::new().cursor('➤').selected_indicator('✓');
+#+end_rust
+
+The defaults and additional options can found under the docs for MenuOptions.
+
+**** TODO add link to MenuOptions doc page when created
