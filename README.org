@@ -50,19 +50,19 @@ fn main() {
 ** How to Use
 *** Adding it to your project dependencies
 Simply run
-#+begin_ sh
+#+begin_src shell
 cargo add cartographer
-#+end_sh
+#+end_src
 in your project directory, or add
-#+begin_toml options
+#+begin_src shell
 "cartographer" = "the latest version"
-#+end_toml
+#+end_src
 to your ~Cargo.toml~.
 
 *** Creating a menu!
 There are two ways you can create a menu and serve it. The macro way, and the manual way. The macro way is demonstrated in the example above.
 
-The manual way uses builder notation on the ~cartographer::Menu~ and ~cartographer::MenuItem~ structs to manually build menus and menu items. The macro way is recommended, but you can find examples of the manual way in [[https://github.com/Nickiel12/cartographer/blob/main/examples/manual_menu.rs][in the examples directory]])
+(The manual way uses builder notation on the ~cartographer::Menu~ and ~cartographer::MenuItem~ structs to manually build menus and menu items. The macro way is recommended, but you can find examples of the manual way in [[https://github.com/Nickiel12/cartographer/blob/main/examples/manual_menu.rs][in the examples directory]])
 
 *** Serving your menu
 All menu logic is handled behind the scenes, and all you have to do is call ~.serve()~ on a valid ~Menu~ and wait for the user to make their selections.
