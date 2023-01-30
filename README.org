@@ -10,9 +10,6 @@ The main reason I created this crate, was that other, less specific crates, like
 
 - [ ] Make an examples README with gifs of the examples being run
 
-All types handled by this crate are of type ~String~. The values from prompts, and the return types are all strings, so I would suggest using a solution much like what can be found in [[https://github.com/Nickiel12/cartographer/blob/main/examples/enum_matching_results.rs][the examples]] to make it easy to ~match~ to the return value.
-
-But all returned strings will match the given prompts (including special formatting!), so just look for that if you decide to match by strings!
 
 ** TODO fix macro probably failing if given a ~String~
 
@@ -60,12 +57,18 @@ in your project directory, or add
 to your ~Cargo.toml~.
 
 *** Creating a menu!
-There are two ways you can create a menu and serve it. The macro way, and the manual way. The macro way is demonstrated in the example above.
+There are two ways you can create a menu.
 
-(The manual way uses builder notation on the ~cartographer::Menu~ and ~cartographer::MenuItem~ structs to manually build menus and menu items. The macro way is recommended, but you can find examples of the manual way in [[https://github.com/Nickiel12/cartographer/blob/main/examples/manual_menu.rs][in the examples directory]])
+The macro way, and the manual way.
+
+The macro way is demonstrated in the example above, and an example of the manual way can be found [[https://github.com/Nickiel12/cartographer/blob/main/examples/manual_menu.rs][in the examples directory]] The manual way uses builder notation and the ~cartographer::Menu~ and ~cartographer::MenuItem~ structs to manually build menus and menu items.
+
+All types handled by this crate are of type ~String~. The values from prompts, and the return types are all strings, so I would suggest using a solution much like what can be found in [[https://github.com/Nickiel12/cartographer/blob/main/examples/enum_matching_results.rs][the examples]] to easily ~match~ the return value.
+
+But returned strings will match the supplied prompts including special formatting! So just be careful if you decide to match by strings!
 
 *** Serving your menu
-All menu logic is handled behind the scenes, and all you have to do is call ~.serve()~ on a valid ~Menu~ and wait for the user to make their selections.
+All menu logic is handled behind the scenes once ~.serve()~ is called on a valid ~Menu~, and the thread will wait for the user to make their selections.
 
 While threading with this library is probably possible (though untested), make sure that there is no terminal output sent by other threads, or visual problems will start to crop up.
 
