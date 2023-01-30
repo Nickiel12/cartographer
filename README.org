@@ -4,14 +4,15 @@
 ** TODO make a cartographer image
 * Cartographer
 Cartographer is a small library using [[https://crates.io/crates/console][Console]] and macros to bring "just add water" TUI menus to your programs.
-Utilizing the power of macros, you can get an interactive menu for users to interact with.
 
-The main reason I created this crate, was that other, less specific crates, like [[https://docs.rs/dialoguer/latest/dialoguer/][Dialoguer]] don't have support for hiding options unless they are searched for. [[https://github.com/Nickiel12/cartographer/tree/main/examples][See examples, for an example of this]]
+Utilizing the power of macros, you can create an interactive menu in less than 10 lines of code.
+
+The main reason I created this crate, is that other, less menu-specific crates, like [[https://docs.rs/dialoguer/latest/dialoguer/][Dialoguer]], don't have support for hiding menu-options on the front page that do show up in search results. [[https://github.com/Nickiel12/cartographer/tree/main/examples][See examples, for an example of this]]
 
 - [ ] Make an examples README with gifs of the examples being run
 
 
-** TODO fix macro probably failing if given a ~String~
+*** TODO fix macro probably failing if given an actual ~String~
 
 ** Example
 (You can find more examples [[https://github.com/Nickiel12/cartographer/tree/main/examples][in the examples directory]])
@@ -61,7 +62,7 @@ There are two ways you can create a menu.
 
 The macro way, and the manual way.
 
-The macro way is demonstrated in the example above, and an example of the manual way can be found [[https://github.com/Nickiel12/cartographer/blob/main/examples/manual_menu.rs][in the examples directory]] The manual way uses builder notation and the ~cartographer::Menu~ and ~cartographer::MenuItem~ structs to manually build menus and menu items.
+The macro way is demonstrated in the example above, and an example of the manual way can be found [[https://github.com/Nickiel12/cartographer/blob/main/examples/manual_menu.rs][in the examples directory.]] The manual way uses builder notation and the ~cartographer::Menu~ and ~cartographer::MenuItem~ structs to manually build menus and menu items.
 
 All types handled by this crate are of type ~String~. The values from prompts, and the return types are all strings, so I would suggest using a solution much like what can be found in [[https://github.com/Nickiel12/cartographer/blob/main/examples/enum_matching_results.rs][the examples]] to easily ~match~ the return value.
 
@@ -70,7 +71,7 @@ But returned strings will match the supplied prompts including special formattin
 *** Serving your menu
 All menu logic is handled behind the scenes once ~.serve()~ is called on a valid ~Menu~, and the thread will wait for the user to make their selections.
 
-While threading with this library is probably possible (though untested), make sure that there is no terminal output sent by other threads, or visual problems will start to crop up.
+While threading with this library is probably possible (though untested), make sure that there is no terminal output sent by other threads, or visual problems will start to crop up.
 
 
 *** Configuration
