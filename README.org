@@ -2,7 +2,7 @@
 
 #+begin_html
 <p align="center">
-    <img src="./Logo.svg" align="center" />
+    <img src="./Logo.svg" style="width: 75%;" />
 </p>
 #+end_html
 
