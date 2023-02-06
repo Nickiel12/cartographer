@@ -12,5 +12,5 @@ fn main() {
     let menu = Menu::new("It is wordy though: ".to_string(), menu_items, None);
 
     let selection = menu.serve().unwrap().unwrap();
-    println!("{:?}", selection);
+    println!("\n{:?}", selection);
 }
