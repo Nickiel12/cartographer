@@ -4,7 +4,7 @@
 ** A basic menu
 #+begin_html
 <a href="./example_menu.rs">
-    <img src="./example_menu.gif" style="width: 60%;" />
+    <img src="./tapes/example_menu.gif" style="width: 60%;" />
 </a>
 #+end_html
 ** Enum matching
@@ -12,7 +12,7 @@ Using a ~to_string()~ and a ~from_string()~ function and an enum to simplify a m
 
 #+begin_html
 <a href="./enum_matching_results.rs">
-    <img src="./enum_matching_results.gif" style="width: 60%;" />
+    <img src="./tapes/enum_matching_results.gif" style="width: 60%;" />
 </a>
 #+end_html
 ** Hidden items
@@ -21,20 +21,20 @@ You can make some items not show up by default, and only appear in search result
 *Please Note:* The below example shows a known bug where the number of lines to clear is calculated imporperly for smaller terminal windows.
 #+begin_html
 <a href="./hidden_items.rs">
-    <img src="./hidden_items.gif" style="width: 60%;" />
+    <img src="./tapes/hidden_items.gif" style="width: 60%;" />
 </a>
 #+end_html
 ** Manually created menu
 You can make a menu without using any macros, but it is much more wordy. Good for LoC statistics though!
 #+begin_html
 <a href="./manual_menu.rs">
-    <img src="./manual_menu.gif" style="width: 60%;" />
+    <img src="./tapes/manual_menu.gif" style="width: 60%;" />
 </a>
 #+end_html
 ** Sub Menus
 Although sub menu's are not a feature of Cartographer, they are easily implemented.
 #+begin_html
 <a href="./sub_menus.rs">
-    <img src="./sub_menus.gif" style="width: 60%;" />
+    <img src="./tapes/sub_menus.gif" style="width: 60%;" />
 </a>
 #+end_html
