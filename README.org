@@ -47,7 +47,11 @@ fn main() {
 
 #+end_src
 
-[[./demo.gif]]
+#+begin_html
+<p align="center">
+    <img src="./demo.gif" style="width: 75%;" />
+</p>
+#+end_html
 
 ** How to Use
 *** Adding it to your project dependencies
