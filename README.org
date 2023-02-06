@@ -1,7 +1,9 @@
 #+title: Readme
+#+MACRO: imglnk @@html:<a href="$1"><img src="$2"></a>@@
 
-* [Placeholder till image]
-** TODO make a cartographer image
+
+{{{imglnk(https://github.com, ./Logo.svg)}}}
+
 * Cartographer
 Cartographer is a small library using [[https://crates.io/crates/console][Console]] and macros to bring "just add water" TUI menus to your programs.
 
