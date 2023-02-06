@@ -13,7 +13,7 @@ fn main() {
     let options = MenuOptions::new().cursor('➤').selected_indicator('✓');
 
     let menu = menu!(
-        "Using serde for good matching: ",
+        "You can convert strings to and from enum variants\nto make them easier to match: ",
         options,
         [
             menu_item!(MenuElements::First.to_str()),
