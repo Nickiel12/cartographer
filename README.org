@@ -1,9 +1,8 @@
 #+title: Readme
 
 #+begin_html
-<img src="./Logo.svg" style="margin-left: auto; margin-right: auto;" />
+<img src="./Logo.svg" align="center" />
 #+end_html
-
 
 * Cartographer
 Cartographer is a small library using [[https://crates.io/crates/console][Console]] and macros to bring "just add water" TUI menus to your programs.
