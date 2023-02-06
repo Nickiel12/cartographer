@@ -1,7 +1,9 @@
 #+title: Readme
 
 #+begin_html
-<img src="./Logo.svg" align="center" />
+<p align="center">
+    <img src="./Logo.svg" align="center" />
+</p>
 #+end_html
 
 * Cartographer
