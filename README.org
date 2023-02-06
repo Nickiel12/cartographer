@@ -11,9 +11,9 @@ Cartographer is a small library using [[https://crates.io/crates/console][Consol
 
 Utilizing the power of macros, you can create an interactive menu in less than 10 lines of code.
 
-The main reason I created this crate, is that other, less menu-specific crates, like [[https://docs.rs/dialoguer/latest/dialoguer/][Dialoguer]], don't support menu-options that only show up in search results. [[https://github.com/Nickiel12/cartographer/tree/main/examples][See examples, for an example of this]]
+The main reason I created this crate, is that other, less menu-specific crates, like [[https://docs.rs/dialoguer/latest/dialoguer/][Dialoguer]], don't support menu-options that only show up in search results.
 
-- [ ] Make an examples README with gifs of the examples being run
+[[https://github.com/Nickiel12/cartographer/tree/main/examples][See examples for some... Examples of Cartographer's offerings]]
 
 ** Example
 (You can find more examples [[https://github.com/Nickiel12/cartographer/tree/main/examples][in the examples directory]])
