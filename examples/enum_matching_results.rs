@@ -10,7 +10,7 @@ enum MenuElements {
 }
 
 fn main() {
-    let options = MenuOptions::new().cursor('➤').selected_indicator('✓');
+    let options = MenuOptions::new().cursor("➤").selected_indicator("✓");
 
     let menu = menu!(
         "You can convert strings to and from enum variants\nto make them easier to match: ",

@@ -145,10 +145,12 @@ impl Menu {
 #[derive(Clone, Debug, PartialEq)]
 pub struct MenuOptions {
     /// The user's cursor while they navigate
-    cursor: char,
+    cursor: String,
+    cursor_width: usize,
 
     /// The char used to indicate an item is selected
-    selected_indicator: char,
+    selected_indicator: String,
+    selected_indicator_width: usize,
 
     /// The button the user uses to select an item
     select_key: console::Key,
@@ -180,16 +182,25 @@ impl MenuOptions {
 
     /// Set the user's row-indicator/cursor to a custom character.
     /// The default is: '>'
-    pub fn cursor(self: Self, cursor: char) -> Self {
-        MenuOptions { cursor, ..self }
+    pub fn cursor(self: Self, cursor: &str) -> Self {
+        MenuOptions { cursor: cursor.to_string(), ..self }
     }
+    /// Override the space given for the cursor navigation column
+    pub fn cursor_width(self: Self, cursor_width: usize) -> Self {
+        MenuOptions { cursor_width, ..self }
+    }
+
     /// Set the "Item Selected" indicator to a custom character.
     /// Defaults is: 'X'
-    pub fn selected_indicator(self: Self, indicator: char) -> Self {
+    pub fn selected_indicator(self: Self, indicator: &str) -> Self {
         MenuOptions {
-            selected_indicator: indicator,
+            selected_indicator: indicator.to_string(),
             ..self
         }
+    }
+    /// Override the space given for the cursor navigation column
+    pub fn selected_indicator_width(self: Self, indicator_width: usize) -> Self {
+        MenuOptions { selected_indicator_width: indicator_width, ..self }
     }
     /// Set the key that is used to select an item.
     /// The default is: [`console::Key::Char(' ')`]
@@ -243,8 +254,10 @@ impl MenuOptions {
 impl Default for MenuOptions {
     fn default() -> Self {
         MenuOptions {
-            cursor: '>',
-            selected_indicator: 'X',
+            cursor: ">".to_string(),
+            cursor_width: 1,
+            selected_indicator: "X".to_string(),
+            selected_indicator_width: 1,
             select_key: console::Key::Char(' '),
             max_lines_visible: 10,
             min_search_threshold: 0.005,

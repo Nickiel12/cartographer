@@ -119,13 +119,13 @@ impl MenuState {
         let cursor = if self.cursor_row == cur_redraw_row {
             opts.cursor.to_string()
         } else {
-            " ".to_string()
+            " ".repeat(opts.cursor_width).to_string()
         };
 
         // If the line is selected, add the selected character to the string.
         let sel_indicator = match item.is_selected {
             true => opts.selected_indicator.to_string() + " ",
-            false => "  ".to_string(),
+            false => "  ".repeat(opts.selected_indicator_width).to_string(),
         };
 
         return cursor + sel_indicator.as_str() + item.menu_item.visible_name.as_str();

@@ -1,7 +1,7 @@
 use cartographer::{menu, menu_item, MenuOptions};
 
 fn main() {
-    let options = MenuOptions::new().cursor('➤').selected_indicator('✓');
+    let options = MenuOptions::new().cursor("➤").selected_indicator("✓");
 
     let menu = menu!(
         "So you should try it!: ",

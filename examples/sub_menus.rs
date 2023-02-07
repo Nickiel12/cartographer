@@ -10,8 +10,8 @@ enum MenuElements {
 }
 
 fn main() {
-    let options = MenuOptions::new().cursor('➤').selected_indicator('✓');
-    let options2 = MenuOptions::new().cursor('➥').selected_indicator('U');
+    let options = MenuOptions::new().cursor("➤").selected_indicator("✓");
+    let options2 = MenuOptions::new().cursor("➥").selected_indicator("U");
 
     let menu = menu!(
         "Using serde for good matching: ",
