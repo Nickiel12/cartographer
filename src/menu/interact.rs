@@ -32,7 +32,7 @@ struct MenuState {
 impl MenuState {
     /// goes through the [`MenuState`], comparing each [`MenuItem`](crate::MenuItem) comparing the
     /// visible_name and alternative_matches to the user's input
-    fn search_from_inputed(self: &mut Self, opts: &MenuOptions) {
+    fn search_from_inputed(&mut self, opts: &MenuOptions) {
         // keep a count of how many rows for later use
         let mut num_results = 0;
 
@@ -91,7 +91,7 @@ impl MenuState {
     }
 
     /// Edit the current row's indicator to be visible on user input
-    fn mark_selected(self: &mut Self) {
+    fn mark_selected(&mut self) {
         // Poor man's "filter by visible" for loop
         // counter keeps track of current "visible" row, and if that is the line that the user's
         // cursor is on, sets it to selected, because that is the only row that the user could be
@@ -109,7 +109,7 @@ impl MenuState {
 
     /// Get the visible string for visible row at item index `item_index`
     fn get_row(
-        self: &Self,
+        &self,
         item: &MenuItemKeepTrack,
         cur_redraw_row: usize,
         opts: &MenuOptions,
@@ -119,19 +119,19 @@ impl MenuState {
         let cursor = if self.cursor_row == cur_redraw_row {
             opts.cursor.to_string()
         } else {
-            " ".repeat(opts.cursor_width).to_string()
+            " ".repeat(opts.cursor_width)
         };
 
         // If the line is selected, add the selected character to the string.
         let sel_indicator = match item.is_selected {
             true => opts.selected_indicator.to_string() + " ",
-            false => "  ".repeat(opts.selected_indicator_width).to_string(),
+            false => "  ".repeat(opts.selected_indicator_width),
         };
 
         return cursor + sel_indicator.as_str() + item.menu_item.visible_name.as_str();
     }
 
-    fn get_menu_string(self: &mut Self, opts: &MenuOptions) -> Result<String, std::io::Error> {
+    fn get_menu_string(&mut self, opts: &MenuOptions) -> Result<String, std::io::Error> {
         // Keep the number of lines the next draw will write
         let mut next_screen_num_lines = 0;
 
@@ -151,7 +151,7 @@ impl MenuState {
                 }
 
                 if item.is_visible {
-                    let x = self.get_row(item, next_screen_num_lines, &opts) + "\n";
+                    let x = self.get_row(item, next_screen_num_lines, opts) + "\n";
                     output += x.as_str();
 
                     next_screen_num_lines += 1;
@@ -163,7 +163,7 @@ impl MenuState {
     }
 
     /// Redraw the menu based on the info in MenuState
-    fn redraw(self: &mut Self, opts: &MenuOptions) -> Result<(), std::io::Error> {
+    fn redraw(&mut self, opts: &MenuOptions) -> Result<(), std::io::Error> {
         let mut next_screen: String;
         let mut next_screen_num_lines: usize;
 
@@ -192,7 +192,7 @@ impl MenuState {
             self.lines_written = 0;
         }
         // Draw the next menu
-        self.term.write(&next_screen.as_bytes())?;
+        self.term.write_all(next_screen.as_bytes())?;
         self.term.flush()?;
         self.lines_written = next_screen_num_lines;
 
@@ -203,7 +203,7 @@ impl MenuState {
 impl Menu {
     /// Serve a menu. This function is locking and requires a terminal.
     /// It returns a Vec of Strings from the items the user selected
-    pub fn serve(self: &Self) -> Result<Option<Vec<String>>, std::io::Error> {
+    pub fn serve(&self) -> Result<Option<Vec<String>>, std::io::Error> {
         let term = Term::stdout();
 
         let mut state = MenuState {
@@ -285,7 +285,7 @@ impl Menu {
             }
         }
 
-        if output.len() == 0 {
+        if output.is_empty() {
             Ok(None)
         } else {
             Ok(Some(output))

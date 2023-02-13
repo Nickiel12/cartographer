@@ -1,4 +1,3 @@
-use console;
 mod interact;
 
 #[cfg_attr(
@@ -49,7 +48,7 @@ impl MenuItem {
     }
 
     /// Set whether a [`MenuItem`] is visible when no search is showing
-    pub fn visible_at_rest(self: Self, visible: bool) -> Self {
+    pub fn visible_at_rest(self, visible: bool) -> Self {
         MenuItem {
             visible_at_rest: visible,
             ..self
@@ -58,7 +57,7 @@ impl MenuItem {
 
     /// Set a [`MenuItem`]'s resting position in the no search menu
     /// Note: Won't have any effect if visible_at_rest is false
-    pub fn at_rest_position(self: Self, position: usize) -> Self {
+    pub fn at_rest_position(self, position: usize) -> Self {
         MenuItem {
             at_rest_position: Some(position),
             ..self
@@ -67,7 +66,7 @@ impl MenuItem {
 
     /// Set alternative matches for a [`MenuItem`]. These are strings that this item will
     /// match to when searching - in addition to the visible_name
-    pub fn add_alternative_match(self: Self, new_matches: Vec<String>) -> Self {
+    pub fn add_alternative_match(self, new_matches: Vec<String>) -> Self {
         let mut cur_matches: Vec<String>;
         if self.alternative_matches.is_none() {
             cur_matches = Vec::new();
@@ -112,8 +111,8 @@ impl Menu {
             prompt,
             items: menu_items,
             configuration: {
-                if configuration.is_some() {
-                    configuration.unwrap()
+                if let Some(configuration) = configuration {
+                    configuration
                 } else {
                     MenuOptions {
                         ..MenuOptions::default()
@@ -182,29 +181,29 @@ impl MenuOptions {
 
     /// Set the user's row-indicator/cursor to a custom character.
     /// The default is: '>'
-    pub fn cursor(self: Self, cursor: &str) -> Self {
+    pub fn cursor(self, cursor: &str) -> Self {
         MenuOptions { cursor: cursor.to_string(), ..self }
     }
     /// Override the space given for the cursor navigation column
-    pub fn cursor_width(self: Self, cursor_width: usize) -> Self {
+    pub fn cursor_width(self, cursor_width: usize) -> Self {
         MenuOptions { cursor_width, ..self }
     }
 
     /// Set the "Item Selected" indicator to a custom character.
     /// Defaults is: 'X'
-    pub fn selected_indicator(self: Self, indicator: &str) -> Self {
+    pub fn selected_indicator(self, indicator: &str) -> Self {
         MenuOptions {
             selected_indicator: indicator.to_string(),
             ..self
         }
     }
     /// Override the space given for the cursor navigation column
-    pub fn selected_indicator_width(self: Self, indicator_width: usize) -> Self {
+    pub fn selected_indicator_width(self, indicator_width: usize) -> Self {
         MenuOptions { selected_indicator_width: indicator_width, ..self }
     }
     /// Set the key that is used to select an item.
     /// The default is: [`console::Key::Char(' ')`]
-    pub fn select_key(self: Self, key: console::Key) -> Self {
+    pub fn select_key(self, key: console::Key) -> Self {
         MenuOptions {
             select_key: key,
             ..self
@@ -212,7 +211,7 @@ impl MenuOptions {
     }
     /// Set the maximum number of items that will be displayed at any one time.
     /// The default is: 10
-    pub fn max_lines_visible(self: Self, max_lines: usize) -> Self {
+    pub fn max_lines_visible(self, max_lines: usize) -> Self {
         MenuOptions {
             max_lines_visible: max_lines,
             ..self
@@ -221,8 +220,8 @@ impl MenuOptions {
     /// Set the degree of "fuzziness" that it will match too. Higher numbers will return more
     /// results, but less accurate ones. Has to be 1.0 >= x >= 0 or will panic
     /// The default is: 0.005
-    pub fn minimum_search_threshold(self: Self, threshold: f32) -> Self {
-        assert!(1.0 >= threshold && threshold >= 0.0);
+    pub fn minimum_search_threshold(self, threshold: f32) -> Self {
+        assert!( (0.0..1.0).contains(&threshold) );
         MenuOptions {
             min_search_threshold: threshold,
             ..self
@@ -230,7 +229,7 @@ impl MenuOptions {
     }
     /// Set if 'selected' rows are still shown during searches they aren't results for
     /// The default is: true
-    pub fn show_selected_in_search(self: Self, show_in_search: bool) -> Self {
+    pub fn show_selected_in_search(self, show_in_search: bool) -> Self {
         MenuOptions {
             show_select_in_search: show_in_search,
             ..self
@@ -238,12 +237,12 @@ impl MenuOptions {
     }
     /// Set if the menu should exit and return only the first user selection.
     /// The default is: false
-    pub fn only_one_selection(self: Self, only_one: bool) -> Self {
+    pub fn only_one_selection(self, only_one: bool) -> Self {
         MenuOptions { only_one, ..self }
     }
     /// Set if the menu should delete any left-over lines from the terminal.
     /// The default is: true
-    pub fn clear_on_close(self: Self, do_clear: bool) -> Self {
+    pub fn clear_on_close(self, do_clear: bool) -> Self {
         MenuOptions {
             clear_menu_on_exit: do_clear,
             ..self
