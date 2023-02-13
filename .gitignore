@@ -1,6 +1,7 @@
 /target
 Cargo.lock
 
+.emacs.desktop*
 *.swp
 ~/.vim/autoload/plug.vim
 /.direnv/*
