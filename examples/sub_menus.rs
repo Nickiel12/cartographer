@@ -40,7 +40,7 @@ fn main() {
         usr_enum.push(MenuElements::from_str(i.as_str()).unwrap());
     }
 
-    println!("");
+    println!("\n");
 
     for i in usr_enum {
         match i {
