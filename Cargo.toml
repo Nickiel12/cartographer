@@ -6,7 +6,7 @@ repository = "https://github.com/Nickiel12/cartographer"
 edition = "2021"
 description = "A small TUI crate for easily making simple, searchable, menus"
 license = "MIT"
-keywords = ["terminal user interface", "menus", "console", "cartographer"]
+keywords = ["tui", "menu", "console", "cartographer"]
 categories = ["command-line-interface"]
 
 [dependencies]
