@@ -4,12 +4,10 @@ version = "0.1.0"
 authors = ["Nickiel12"]
 repository = "https://github.com/Nickiel12/cartographer"
 edition = "2021"
-description = "A small TUI crate for easily making simple, many optioned, menus"
+description = "A small TUI crate for easily making simple, searchable, menus"
 license = "MIT"
 keywords = ["terminal user interface", "menus", "console", "cartographer"]
 categories = ["command-line-interface"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 console = "0.15.5"
