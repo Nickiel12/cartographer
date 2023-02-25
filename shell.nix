@@ -16,4 +16,8 @@
      ruststable
      rust-analyzer
    ];
+   shellHook = ''
+cargo install --locked bacon
+alias bacon=~/.cargo/bin/bacon
+'';
  }
