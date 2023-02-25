@@ -17,7 +17,7 @@
      rust-analyzer
    ];
    shellHook = ''
-cargo install --locked bacon
-alias bacon=~/.cargo/bin/bacon
+  cargo install --locked bacon
+  export PATH=$HOME/.cargo/bin:$PATH
 '';
  }
