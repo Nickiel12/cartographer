@@ -1,6 +1,6 @@
 [package]
 name = "cartographer-rs"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Nickiel12"]
 repository = "https://github.com/Nickiel12/cartographer"
 edition = "2021"
