@@ -62,10 +62,7 @@ fn main() {
 
 ```
 
-<div class="html" id="org9846775">
-<p>
-&lt;img src=&ldquo;./demo.gif&rdquo; style=&ldquo;width: 75%;&rdquo; /&gt;
-</p>
+![gif of the above example](https://raw.githubusercontent.com/Nickiel12/cartographer/main/demo.gif)
 
 </div>
 
