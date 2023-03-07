@@ -9,7 +9,7 @@
 
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/Nickiel12/cartographer/7ce0a7cac9ad708369c2e810fc77a781eec929e0/Logo.svg)" width="800" alt="Cartographer Logo">
+<img src="https://raw.githubusercontent.com/Nickiel12/cartographer/7ce0a7cac9ad708369c2e810fc77a781eec929e0/Logo.svg" width="800" alt="Cartographer Logo">
 </p>
 
 ![Cartographer](
