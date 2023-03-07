@@ -6,7 +6,7 @@
 </p>
 #+end_html
 
-* Cartographer
+* Cartographer-rs
 Cartographer is a small library using [[https://crates.io/crates/console][Console]] and macros to bring "just add water" TUI menus to your programs.
 
 Utilizing the power of macros, you can create an interactive menu in less than 10 lines of code.
