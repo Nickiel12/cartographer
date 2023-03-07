@@ -3,8 +3,8 @@
 version = 3
 
 [[package]]
-name = "cartographer"
-version = "0.1.0"
+name = "cartographer-rs"
+version = "0.1.1"
 dependencies = [
  "console",
  "enum-variants-strings",
