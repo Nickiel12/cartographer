@@ -122,13 +122,9 @@ To configure how your menu looks, you can use the `cartographer::MenuOptions` st
 
 <div class="rust" id="org5a397b1">
 <p>
-let options = MenuOptions::new().cursor(&rsquo;➤&rsquo;).selected<sub>indicator</sub>(&rsquo;✓&rsquo;);
+let options = MenuOptions::new().cursor(&rsquo;➤&rsquo;).selectedindicator(&rsquo;✓&rsquo;);
 </p>
 
 </div>
 
 The defaults and additional options can found under the docs for MenuOptions.
-
-1.  TODO add link to MenuOptions doc page when created
-
-2.  TODO fix &ldquo;clear written lines&rdquo; messing up when word-wrap happens. `Term::size` to get console width
