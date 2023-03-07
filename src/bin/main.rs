@@ -1,6 +1,6 @@
-use cartographer::{menu, menu_item};
+use cartographer_rs::{menu, menu_item};
 
-extern crate cartographer;
+extern crate cartographer_rs;
 
 fn main() {
     let menu = menu!(

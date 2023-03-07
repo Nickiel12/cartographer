@@ -1,4 +1,4 @@
-use cartographer::{menu, menu_item, MenuOptions};
+use cartographer_rs::{menu, menu_item, MenuOptions};
 
 fn main() {
     let options = MenuOptions::new().cursor("➤").selected_indicator("✓");

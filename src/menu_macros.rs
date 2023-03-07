@@ -17,19 +17,19 @@
 macro_rules! menu_item {
     ($name:expr) => {
         {
-            use cartographer::MenuItem;
+            use cartographer_rs::MenuItem;
             MenuItem::new($name.to_string())
         }
     };
     ($name:expr, $visible_at_rest:expr) => {
         {
-            use cartographer::MenuItem;
+            use cartographer_rs::MenuItem;
             MenuItem::new($name.to_string()).visible_at_rest($visible_at_rest)
         }
     };
     ($name:expr, $visible_at_rest:expr, $default_position:expr) => {
         {
-            use cartographer::MenuItem;
+            use cartographer_rs::MenuItem;
             MenuItem::new($name.to_string())
                 .visible_at_rest($visible_at_rest)
                 .at_rest_position($default_position)
@@ -37,7 +37,7 @@ macro_rules! menu_item {
     };
     ($name:expr, $visible_at_rest:expr, $default_position:expr, [$($alt_matches:expr),+]) => {
         {
-            use cartographer::MenuItem;
+            use cartographer_rs::MenuItem;
             MenuItem::new($name.to_string())
                 .visible_at_rest($visible_at_rest)
                 .at_rest_position($default_position)
@@ -78,7 +78,7 @@ macro_rules! menu_item {
 macro_rules! menu {
     ( $prompt:expr, [$( $menu_item:expr ),*]) => {
         {
-            use cartographer::{MenuItem, Menu, MenuOptions};
+            use cartographer_rs::{MenuItem, Menu, MenuOptions};
             let mut items = Vec::<MenuItem>::new();
             $(
                 items.push($menu_item);
@@ -93,7 +93,7 @@ macro_rules! menu {
     };
     ( $prompt:expr, $configuration:expr, [$( $menu_item:expr ),*]) => {
         {
-            use cartographer::{MenuItem, Menu};
+            use cartographer_rs::{MenuItem, Menu};
             let mut items = Vec::<MenuItem>::new();
             $(
                 items.push($menu_item);

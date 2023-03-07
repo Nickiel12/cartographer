@@ -1,4 +1,4 @@
-use cartographer::{Menu, MenuItem};
+use cartographer_rs::{Menu, MenuItem};
 
 fn main() {
     let mut menu_items: Vec<MenuItem> = Vec::new();

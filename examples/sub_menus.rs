@@ -1,4 +1,4 @@
-use cartographer::{menu, menu_item, MenuOptions};
+use cartographer_rs::{menu, menu_item, MenuOptions};
 use enum_variants_strings::EnumVariantsStrings;
 
 #[derive(Debug, PartialEq, EnumVariantsStrings)]

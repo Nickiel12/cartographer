@@ -5,7 +5,7 @@
 //!
 //! ## Example
 //! ```
-//! use cartographer::{menu, menu_item};
+//! use cartographer_rs::{menu, menu_item};
 //! let menu = menu!(
 //!       "Pick a number: ",
 //!       [
