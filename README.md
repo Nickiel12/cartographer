@@ -8,9 +8,7 @@
 
 <div class="html" id="orgbe094ca">
 <p>
-&lt;p align=&ldquo;center&rdquo;&gt;
-    &lt;img src=&ldquo;./Logo.svg&rdquo; style=&ldquo;width: 75%;&rdquo; /&gt;
-&lt;/p&gt;
+    ![Cartographer](https://raw.githubusercontent.com/Nickiel12/cartographer/7ce0a7cac9ad708369c2e810fc77a781eec929e0/Logo.svg)
 </p>
 
 </div>
