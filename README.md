@@ -76,13 +76,13 @@ fn main() {
 Simply run
 
 ```shell
-cargo add cartographer
+cargo add cartographer-rs
 ```
 
 in your project directory, or add
 
 ```shell
-"cartographer" = "the latest version"
+"cartographer-rs" = "the latest version"
 ```
 
 to your `Cargo.toml`.
